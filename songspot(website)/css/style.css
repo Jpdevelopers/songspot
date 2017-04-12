@@ -1,0 +1,87 @@
+body{
+	width:100%;
+	overflow-x:hidden}
+#home{
+	background:url('../background.jpeg'); 
+	background-size:cover;
+}	
+#team{
+	background: #fafafa;
+}
+
+.navbar-fixed{
+	margin-top: -22px; 
+}
+
+footer.page-footer{
+	font-family: 'Ropa Sans';
+	background:#eceff1;	
+}
+footer.page-footer .footer-copyright {
+	background: #263238;
+}
+.custom-text{
+	font-family: 'Gloria Hallelujah';
+}
+.custom-text2{
+	font-family:'Ropa Sans';
+}
+nav{
+	font-family: 'Gloria Hallelujah';
+	background-color:white;
+	height:8%;
+	line-height: 360%;
+}
+.navLink{
+	padding-left: 35px;
+	padding-right: 35px;
+	color:black;
+}
+.navLink:hover {
+	color:#ff9800;
+}
+.active .navLink{
+	color:white;
+}
+.collapsible-body ul li p{ line-height:1%;padding:20px;}
+@media only screen and (min-width:800px){.smallScreen{display:none;}}
+@media only screen and (max-width:499px){.largeScreen{display:none;}}
+@font-face{
+	font-family:'Material Icons';font-style:normal;font-weight:400;
+	src:url(https://example.com/MaterialIcons-Regular.eot);
+	src:local('Material Icons'),
+	local('MaterialIcons-Regular'),
+	url(../icons/MaterialIcons-Regular.woff2) format('woff2'),
+	url(../icons/MaterialIcons-Regular.woff) 
+	format('woff'),
+	url(../icons/MaterialIcons-Regular.ttf) format('truetype')
+}
+
+.material-icons{
+font-family:'Material Icons';
+font-weight:400;font-style:normal;
+font-size:24px;display:inline-block;
+line-height:1;text-transform:none;
+letter-spacing:normal;word-wrap:normal;
+white-space:nowrap;direction:ltr;
+-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;-moz-osx-font-smoothing:grayscale;font-feature-settings:'liga'
+}
+@font-face {
+  font-family: 'Gloria Hallelujah';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Gloria Hallelujah'), local('GloriaHallelujah'), url(../fonts/GloriaHallelujah.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2212, U+2215;
+}
+@font-face{
+	font-family:'Ropa Sans';
+	font-style:normal;font-weight:400;
+	src:local('Ropa Sans Regular'),
+	local('RopaSans-Regular'),
+	url(../fonts/ropa-sans-ext.woff2) format('woff2');unicode-range:U+0100-024F,U+1E00-1EFF,U+20A0-20AB,U+20AD-20CF,U+2C60-2C7F,U+A720-A7FF
+}
+@font-face{
+	font-family:'Ropa Sans';font-style:normal;font-weight:400;
+	src:local('Ropa Sans Regular'),local('RopaSans-Regular'),url(../fonts/ropa-sans.woff2) format('woff2');
+	unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02C6,U+02DA,U+02DC,U+2000-206F,U+2074,U+20AC,U+2212,U+2215
+}
