@@ -1,21 +1,16 @@
 package com.example.ishaandhamija.sunodilse;
 
 import android.content.ContentResolver;
-import android.database.Cursor;
 import android.net.Uri;
+import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
-import android.widget.ToggleButton;
 
 import java.util.ArrayList;
 
@@ -35,7 +30,7 @@ public class CategoryActivity extends AppCompatActivity {
         Uri musicUri = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI;
         String[] proj1 = {"distinct " + MediaStore.Audio.Media.ARTIST};
 
-        Cursor musicCursor = musicResolver.query(musicUri, proj1, null, new String[]{""=""}, null);
+       /* Cursor musicCursor = musicResolver.query(musicUri, proj1, null, new String[]{""=""}, null);
 
         if(musicCursor == null){
             Toast.makeText(this, "No Songs", Toast.LENGTH_SHORT).show();
@@ -51,7 +46,7 @@ public class CategoryActivity extends AppCompatActivity {
         else {
             Log.d("Hello", "getSongList: No Artists");
         }
-
+*/
         rvList2 = (RecyclerView) findViewById(R.id.rvList2);
         FeedAdapter feedAdapter = new FeedAdapter();
 

@@ -1,46 +1,49 @@
 package com.example.ishaandhamija.sunodilse;
 
-import android.app.ActivityOptions;
+import android.annotation.SuppressLint;
+import android.content.ComponentName;
 import android.content.ContentResolver;
 import android.content.ContentUris;
+import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.media.MediaMetadataRetriever;
 import android.media.MediaPlayer;
 import android.net.Uri;
+import android.net.wifi.WifiManager;
+import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.ToggleButton;
 
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 
 public class PlaylistActivity extends AppCompatActivity {
 
+    private static final int HOTSPOT_ACTIVITY = 1234;
     RecyclerView rvList;
     public static ArrayList<Song> songList;
     public static MediaPlayer mp = new MediaPlayer();
-//    Button btnPlaylists;
+    //    Button btnPlaylists;
     private Boolean isFabOpen = false;
     private FloatingActionButton fab,fab1,fab2;
     private Animation fab_open,fab_close,rotate_forward,rotate_backward;
+    WifiManager wifi;
 
+    @SuppressLint("WifiManagerLeak")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,6 +54,7 @@ public class PlaylistActivity extends AppCompatActivity {
         fab = (FloatingActionButton)findViewById(R.id.fab);
         fab1 = (FloatingActionButton)findViewById(R.id.fab1);
         fab2 = (FloatingActionButton)findViewById(R.id.fab2);
+        wifi=(WifiManager) getSystemService(Context.WIFI_SERVICE);
         fab_open = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fab_open);
         fab_close = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.fab_close);
         rotate_forward = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.rotate_forward);
@@ -66,6 +70,18 @@ public class PlaylistActivity extends AppCompatActivity {
         fab1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(!isHotspotEnable()){
+                    Intent intent = new Intent(Intent.ACTION_MAIN);
+                    intent.addCategory(Intent.CATEGORY_LAUNCHER);
+                    final ComponentName cn = new ComponentName("com.android.settings", "com.android.settings.TetherSettings");
+                    intent.setComponent(cn);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivityForResult(intent,HOTSPOT_ACTIVITY);
+                }
+                else{
+                    Toast.makeText(PlaylistActivity.this, "Server will be created", Toast.LENGTH_SHORT).show();
+                }
+
                 Toast.makeText(PlaylistActivity.this, "Fab 1", Toast.LENGTH_SHORT).show();
             }
         });
@@ -98,6 +114,29 @@ public class PlaylistActivity extends AppCompatActivity {
 //                startActivity(new Intent(PlaylistActivity.this, DifferentPlaylistsActivity.class));
 //            }
 //        });
+    }
+
+    private boolean isHotspotEnable() {
+        Method[] wmMethods = wifi.getClass().getDeclaredMethods();
+        for (Method method: wmMethods) {
+            if (method.getName().equals("isWifiApEnabled")) {
+
+                try {
+                    boolean isWifiAPenabled = (boolean) method.invoke(wifi);
+                    return isWifiAPenabled;
+                } catch (IllegalArgumentException e) {
+                    Log.d("state", "onClick: " + e.getMessage());
+                    e.printStackTrace();
+                } catch (IllegalAccessException e) {
+                    Log.d("state", "onClick: " + e.getMessage());
+                    e.printStackTrace();
+                } catch (InvocationTargetException e) {
+                    Log.d("state", "onClick: " + e.getMessage());
+                    e.printStackTrace();
+                }
+            }
+        }
+        return false;
     }
 
 
@@ -253,5 +292,18 @@ public class PlaylistActivity extends AppCompatActivity {
             isFabOpen = true;
 
         }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if(requestCode==HOTSPOT_ACTIVITY){
+            if(!isHotspotEnable()){
+                Toast.makeText(this, "Please open your hotspot", Toast.LENGTH_SHORT).show();
+            }
+            else{
+                Toast.makeText(this, "Hotspot Opened successfully", Toast.LENGTH_SHORT).show();
+            }
+        }
+        super.onActivityResult(requestCode, resultCode, data);
     }
 }
