@@ -1,16 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context="com.example.ishaandhamija.sunodilse.DifferentPlaylistsActivity">
 
-    <android.support.v7.widget.RecyclerView
+    <TextView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/playlistList">
+        android:gravity="center"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:layout_gravity="center"
+        android:textSize="50dp"
+        android:text="Songs"
+        android:textColor="#000"
+        android:id="@+id/songs"/>
 
-    </android.support.v7.widget.RecyclerView>
+    <TextView
+        android:layout_width="match_parent"
+        android:gravity="center"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:layout_gravity="center"
+        android:textSize="50dp"
+        android:text="Artists"
+        android:textColor="#000"
+        android:id="@+id/artists"/>
 
-</RelativeLayout>
+    <TextView
+        android:layout_width="match_parent"
+        android:gravity="center"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:layout_gravity="center"
+        android:textSize="50dp"
+        android:text="Genres"
+        android:textColor="#000"
+        android:id="@+id/genres"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:gravity="center"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:layout_gravity="center"
+        android:textSize="50dp"
+        android:text="Albums"
+        android:textColor="#000"
+        android:id="@+id/albums"/>
+
+</LinearLayout>

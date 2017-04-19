@@ -36,7 +36,6 @@ public class PlaylistActivity extends AppCompatActivity {
     RecyclerView rvList;
     public static ArrayList<Song> songList;
     public static MediaPlayer mp = new MediaPlayer();
-//    Button btnPlaylists;
     private Boolean isFabOpen = false;
     private FloatingActionButton fab,fab1,fab2;
     private Animation fab_open,fab_close,rotate_forward,rotate_backward;
@@ -90,14 +89,6 @@ public class PlaylistActivity extends AppCompatActivity {
         rvList.setLayoutManager(new LinearLayoutManager(this));
         rvList.setAdapter(feedAdapter);
 
-//        btnPlaylists = (Button) findViewById(R.id.btnPlaylists);
-//
-//        btnPlaylists.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                startActivity(new Intent(PlaylistActivity.this, DifferentPlaylistsActivity.class));
-//            }
-//        });
     }
 
 
@@ -105,49 +96,169 @@ public class PlaylistActivity extends AppCompatActivity {
 
         ContentResolver musicResolver = getContentResolver();
         Uri musicUri = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI;
-        String[] proj1 = {"distinct " + MediaStore.Audio.Media.ARTIST};
-        String[] proj2 = {MediaStore.Audio.Media.DISPLAY_NAME};
+        Cursor musicCursor = null;
+        Uri uri = null;
+        String[] proj1 = {MediaStore.Audio.Media.DISPLAY_NAME,MediaStore.Audio.Media._ID,MediaStore.Audio.Media.ARTIST};
+        String[] proj2 = {MediaStore.Audio.Media.DISPLAY_NAME,MediaStore.Audio.Media._ID,MediaStore.Audio.Media.ARTIST};
+        String[] proj3 = {MediaStore.Audio.Media.DISPLAY_NAME,MediaStore.Audio.Media._ID,MediaStore.Audio.Media.ARTIST,MediaStore.Audio.Media.ALBUM};
 
-        Cursor musicCursor = musicResolver.query(musicUri, null, null, null, null);
-
-//        Cursor musicCursor = musicResolver.query(musicUri, proj1, null, null, null);
-
-        if(musicCursor == null){
-            Toast.makeText(this, "No Songs", Toast.LENGTH_SHORT).show();
-            Log.d("", "getSongList: No Songs");
-        }
-
-        if (musicCursor.moveToFirst()) {
-            do {
-                Log.d("Hello", "getSongList: " + musicCursor.getString(0));
-            }while(musicCursor.moveToNext());
-        }
-        else {
-            Log.d("Hello", "getSongList: No Artists");
-        }
-//        if (musicCursor!=null && musicCursor.moveToFirst()){
-//            int titleColumn = musicCursor.getColumnIndex(MediaStore.Audio.Media.DISPLAY_NAME);
-//            int idColumn = musicCursor.getColumnIndex(MediaStore.Audio.Media._ID);
-//            int artistColumn = musicCursor.getColumnIndex(MediaStore.Audio.Media.ARTIST);
-//
-//            do{
-//                long thisId = musicCursor.getLong(idColumn);
-//                String thisTitle = musicCursor.getString(titleColumn);
-//                String thisArtist = musicCursor.getString(artistColumn);
-//                Uri trackUri = ContentUris.withAppendedId(
-//                        android.provider.MediaStore.Audio.Media.EXTERNAL_CONTENT_URI,
-//                        thisId);
-//
-//                Bitmap bitmap = null;
-//                MediaMetadataRetriever mmr = new MediaMetadataRetriever();
-//                mmr.setDataSource(getApplicationContext(),trackUri);
-//                byte [] data = mmr.getEmbeddedPicture();
-//                if (data != null){
-//                    bitmap = BitmapFactory.decodeByteArray(data, 0 ,data.length);
-//                }
-//                songList.add(new Song(thisId, thisTitle, thisArtist, bitmap));
-//            }while (musicCursor.moveToNext());
+//        if (getIntent().getIntExtra("pos",0) == 0) {
+//            musicCursor = musicResolver.query(musicUri, null, null, null, null);
 //        }
+////        else if (getIntent().getIntExtra("pos",0) == 1){
+////            musicCursor = musicResolver.query(musicUri, null, null, null, null);
+////        }
+
+        if (getIntent().getIntExtra("pos",0) == 1){
+            String naam = getIntent().getStringExtra("artist");
+            musicCursor = musicResolver.query(musicUri, proj1,MediaStore.Audio.Media.ARTIST + "='" + naam+"'", null, null);
+
+            if (musicCursor == null) {
+                Toast.makeText(this, "No Songs", Toast.LENGTH_SHORT).show();
+                Log.d("", "getSongList: No Songs");
+            }
+
+            if(musicCursor.moveToFirst()) {
+                int titleColumn = musicCursor.getColumnIndex(MediaStore.Audio.Media.DISPLAY_NAME);
+                int idColumn = musicCursor.getColumnIndex(MediaStore.Audio.Media._ID);
+                int artistColumn = musicCursor.getColumnIndex(MediaStore.Audio.Media.ARTIST);
+                do{
+                    long thisId = musicCursor.getLong(idColumn);
+                    String thisTitle = musicCursor.getString(titleColumn);
+                    String thisArtist = musicCursor.getString(artistColumn);
+
+                    Uri trackUri = ContentUris.withAppendedId(
+                            android.provider.MediaStore.Audio.Media.EXTERNAL_CONTENT_URI,
+                            thisId);
+                    Bitmap bitmap = null;
+                    MediaMetadataRetriever mmr = new MediaMetadataRetriever();
+                    mmr.setDataSource(getApplicationContext(), trackUri);
+                    byte[] data = mmr.getEmbeddedPicture();
+                    if (data != null) {
+                        bitmap = BitmapFactory.decodeByteArray(data, 0, data.length);
+                    }
+                    songList.add(new Song(thisId, thisTitle, thisArtist, bitmap));
+                }while (musicCursor.moveToNext());
+            }
+        }
+
+         if (getIntent().getIntExtra("pos",0) == 2){
+//            musicCursor = musicResolver.query(musicUri, null, null, null, null);
+            if (getIntent().hasExtra("uri")) {
+                uri = (Uri)getIntent().getParcelableExtra("uri");
+            }
+            musicCursor = managedQuery(uri, proj2, null,null,null);
+
+
+             if (musicCursor == null) {
+                 Toast.makeText(this, "No Songs", Toast.LENGTH_SHORT).show();
+                 Log.d("", "getSongList: No Songs");
+             }
+
+            if (musicCursor!=null && musicCursor.moveToFirst()) {
+                int titleColumn = musicCursor.getColumnIndex(MediaStore.Audio.Media.DISPLAY_NAME);
+                int idColumn = musicCursor.getColumnIndex(MediaStore.Audio.Media._ID);
+                int artistColumn = musicCursor.getColumnIndex(MediaStore.Audio.Media.ARTIST);
+                do {
+
+//                    int titleColumn = musicCursor.getColumnIndexOrThrow(MediaStore.Audio.Media.DISPLAY_NAME);
+//                    int idColumn = musicCursor.getColumnIndexOrThrow(MediaStore.Audio.Media._ID);
+//                    int artistColumn = musicCursor.getColumnIndexOrThrow(MediaStore.Audio.Media.ARTIST);
+                    int index = musicCursor.getColumnIndexOrThrow(MediaStore.Audio.Media.DISPLAY_NAME);
+                    Log.i("Tag-Song name", musicCursor.getString(index));
+                    long thisId = musicCursor.getLong(idColumn);
+                    String thisTitle = musicCursor.getString(titleColumn);
+                    String thisArtist = musicCursor.getString(artistColumn);
+
+                    Uri trackUri = ContentUris.withAppendedId(
+                          android.provider.MediaStore.Audio.Media.EXTERNAL_CONTENT_URI,
+                            thisId);
+                    Bitmap bitmap = null;
+                    MediaMetadataRetriever mmr = new MediaMetadataRetriever();
+                    mmr.setDataSource(getApplicationContext(), trackUri);
+                    byte[] data = mmr.getEmbeddedPicture();
+                    if (data != null) {
+                        bitmap = BitmapFactory.decodeByteArray(data, 0, data.length);
+                    }
+                    songList.add(new Song(thisId, thisTitle, thisArtist, bitmap));
+                } while(musicCursor.moveToNext());
+            }
+        }
+
+        if (getIntent().getIntExtra("pos",0) == 3){
+            String naam = getIntent().getStringExtra("album");
+            musicCursor = musicResolver.query(musicUri, proj3,MediaStore.Audio.Media.ALBUM + "='" + naam+"'", null, null);
+
+            if (musicCursor == null) {
+                Toast.makeText(this, "No Songs", Toast.LENGTH_SHORT).show();
+                Log.d("", "getSongList: No Songs");
+            }
+
+            if(musicCursor.moveToFirst()) {
+                int titleColumn = musicCursor.getColumnIndex(MediaStore.Audio.Media.DISPLAY_NAME);
+                int idColumn = musicCursor.getColumnIndex(MediaStore.Audio.Media._ID);
+                int artistColumn = musicCursor.getColumnIndex(MediaStore.Audio.Media.ARTIST);
+                do{
+                    long thisId = musicCursor.getLong(idColumn);
+                    String thisTitle = musicCursor.getString(titleColumn);
+                    String thisArtist = musicCursor.getString(artistColumn);
+
+                    Log.d("ALBUM WALA", "getSongList: " + thisTitle);
+
+                    Uri trackUri = ContentUris.withAppendedId(
+                            android.provider.MediaStore.Audio.Media.EXTERNAL_CONTENT_URI,
+                            thisId);
+                    Bitmap bitmap = null;
+                    MediaMetadataRetriever mmr = new MediaMetadataRetriever();
+                    mmr.setDataSource(getApplicationContext(), trackUri);
+                    byte[] data = mmr.getEmbeddedPicture();
+                    if (data != null) {
+                        bitmap = BitmapFactory.decodeByteArray(data, 0, data.length);
+                    }
+                    songList.add(new Song(thisId, thisTitle, thisArtist, bitmap));
+                }while (musicCursor.moveToNext());
+            }
+        }
+
+//        Cursor musicCursor = musicResolver.query(musicUri, null,MediaStore.Audio.Genres.NAME+"='Club'", null, null);
+//        if (getIntent().hasExtra("uri")) {
+//                uri = (Uri)getIntent().getParcelableExtra("uri");musicCursor = musicResolver.query(uri,null,MediaStore.Audio.Genres.NAME+"='Club'", null, null);
+//
+        if (getIntent().getIntExtra("pos",0) == 0) {
+
+            musicCursor = musicResolver.query(musicUri, null, null, null, null);
+
+            if (musicCursor == null) {
+                Toast.makeText(this, "No Songs", Toast.LENGTH_SHORT).show();
+                Log.d("", "getSongList: No Songs");
+            }
+
+            if (musicCursor != null && musicCursor.moveToFirst()) {
+                int titleColumn = musicCursor.getColumnIndex(MediaStore.Audio.Media.DISPLAY_NAME);
+                int idColumn = musicCursor.getColumnIndex(MediaStore.Audio.Media._ID);
+                int artistColumn = musicCursor.getColumnIndex(MediaStore.Audio.Media.ARTIST);
+                int albumColumn = musicCursor.getColumnIndex(MediaStore.Audio.Media.ALBUM);
+
+                do {
+                    long thisId = musicCursor.getLong(idColumn);
+                    String thisTitle = musicCursor.getString(titleColumn);
+                    String thisArtist = musicCursor.getString(artistColumn);
+                    String thisAlbum = musicCursor.getString(albumColumn);
+
+                    Uri trackUri = ContentUris.withAppendedId(
+                            android.provider.MediaStore.Audio.Media.EXTERNAL_CONTENT_URI,
+                            thisId);
+                    Bitmap bitmap = null;
+                    MediaMetadataRetriever mmr = new MediaMetadataRetriever();
+                    mmr.setDataSource(getApplicationContext(), trackUri);
+                    byte[] data = mmr.getEmbeddedPicture();
+                    if (data != null) {
+                        bitmap = BitmapFactory.decodeByteArray(data, 0, data.length);
+                    }
+                    songList.add(new Song(thisId, thisTitle, thisArtist, bitmap));
+                } while (musicCursor.moveToNext());
+            }
+        }
     }
 
     class FeedHolder extends RecyclerView.ViewHolder{
