@@ -60,7 +60,7 @@ class ClientAsynTask extends AsyncTask<Void, Void, Void> {
                     //final WifiManager manager = (WifiManager) context.getSystemService(WIFI_SERVICE);
                     final DhcpInfo dhcp = wm.getDhcpInfo();
                     final String address = Formatter.formatIpAddress(dhcp.gateway);
-                    s = new Socket(address, 12345);
+                    s = new Socket(address, 12344);
 
                     ByteArrayOutputStream bao = new ByteArrayOutputStream();
 //                    ObjectOutputStream oos = new ObjectOutputStream(bao);

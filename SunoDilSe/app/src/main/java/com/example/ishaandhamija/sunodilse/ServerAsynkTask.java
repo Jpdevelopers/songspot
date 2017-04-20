@@ -24,7 +24,7 @@ class ServerAsynkTask extends AsyncTask<Void,Void,Void> {
             Log.e("NETWORKKK","doinnnn");
 
             Boolean end = false;
-            ServerSocket ss = new ServerSocket(12345);
+            ServerSocket ss = new ServerSocket(12344);
             Log.e("NETWORKKK","server created");
             while(!end){
                 try

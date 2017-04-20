@@ -11,12 +11,14 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
+
         >
 
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:src="@drawable/bg_gradient3"/>
+            android:src="@drawable/bg_gradient3"
+            android:id="@+id/songs"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -36,7 +38,8 @@
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:src="@drawable/bg_gradient4"/>
+            android:src="@drawable/bg_gradient4"
+            android:id="@+id/artists"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -57,7 +60,8 @@
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:src="@drawable/bg_gradient2"/>
+            android:src="@drawable/bg_gradient2"
+            android:id="@+id/genres"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -79,7 +83,8 @@
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:src="@drawable/bg_gradient"/>
+            android:src="@drawable/bg_gradient"
+            android:id="@+id/albums"/>
 
         <TextView
             android:layout_width="wrap_content"
