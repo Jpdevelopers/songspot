@@ -74,6 +74,13 @@ public class PlaylistActivity extends AppCompatActivity {
         fab1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Toast.makeText(PlaylistActivity.this, "Fab 1", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        fab2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
                 if(!isHotspotEnable()){
                     Intent intent = new Intent(Intent.ACTION_MAIN);
                     intent.addCategory(Intent.CATEGORY_LAUNCHER);
@@ -86,14 +93,6 @@ public class PlaylistActivity extends AppCompatActivity {
                     new ServerAsynkTask().execute();
                     Toast.makeText(PlaylistActivity.this, "Server will be created", Toast.LENGTH_SHORT).show();
                 }
-
-                Toast.makeText(PlaylistActivity.this, "Fab 1", Toast.LENGTH_SHORT).show();
-            }
-        });
-
-        fab2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
                 Toast.makeText(PlaylistActivity.this, "Fab 2", Toast.LENGTH_SHORT).show();
             }
         });
