@@ -9,12 +9,13 @@ import java.io.ObjectInputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.UnknownHostException;
-import java.util.List;
+import java.util.ArrayList;
 
 
 class ServerAsynkTask extends AsyncTask<Void,Void,Void> {
 
-    List<String> persons;
+    ArrayList<String> genre;
+    ArrayList<String> artist;
     @Override
     protected Void doInBackground(Void... params) {
         try {
@@ -40,12 +41,15 @@ class ServerAsynkTask extends AsyncTask<Void,Void,Void> {
                 Log.d("NETWORKKK", "From client: "+st);*/
 //                ByteArrayInputStream bis = new ByteArrayInputStream(bytesFromSocket);
                     ObjectInputStream ois = new ObjectInputStream(s.getInputStream());
-                    persons = (List<String>) ois.readObject();
-                    Log.e("server",persons.toString());
+                    genre = (ArrayList<String>) ois.readObject();
+                    artist= (ArrayList<String>) ois.readObject();
+                    Log.e("server",genre.toString());
+                    Log.e("doInBackground: ",artist.toString());
                     s.close();
 //                if (st!=null){
 //                    end = true;
 //                }
+                    break;
 
                 }
                 catch (Exception e)

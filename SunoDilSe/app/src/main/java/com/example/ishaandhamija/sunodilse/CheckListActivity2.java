@@ -1,12 +1,11 @@
 package com.example.ishaandhamija.sunodilse;
 
 import android.content.ContentResolver;
-import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
+import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -70,6 +69,7 @@ public class CheckListActivity2 extends AppCompatActivity {
                     }
                 }
                 Toast.makeText(CheckListActivity2.this, "Done", Toast.LENGTH_SHORT).show();
+                new ClientAsynTask(CheckListActivity2.this,genreList,artistList).execute();
                 for (int i=0;i<genreList.size();i++){
                     Log.d("DD", "onClick: " + genreList.get(i));
                 }

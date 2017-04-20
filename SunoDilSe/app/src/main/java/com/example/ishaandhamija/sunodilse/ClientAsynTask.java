@@ -25,12 +25,14 @@ class ClientAsynTask extends AsyncTask<Void, Void, Void> {
     private static final String TAG = "IP";
     private WeakReference<Context> mContextRef;
     private String ipString;
-    private ArrayList<String> person;
+    private ArrayList<String> genre;
+    private ArrayList<String> artist;
     //private ArrayList<S>
 
-    public ClientAsynTask(Context context, String ip) {
+    public ClientAsynTask(Context context, ArrayList<String>gen,ArrayList<String>art) {
         mContextRef = new WeakReference<Context>(context);
-        ipString=ip;
+        genre=gen;
+        artist=art;
     }
 
     @Override
@@ -38,10 +40,6 @@ class ClientAsynTask extends AsyncTask<Void, Void, Void> {
 
         try {
             Context context = mContextRef.get();
-            person=new ArrayList<>();
-            person.add("Harsh");
-            person.add("Ishaan");
-            person.add("Jdev");
             if (context != null) {
 
                 ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
@@ -65,7 +63,8 @@ class ClientAsynTask extends AsyncTask<Void, Void, Void> {
                     ByteArrayOutputStream bao = new ByteArrayOutputStream();
 //                    ObjectOutputStream oos = new ObjectOutputStream(bao);
                     ObjectOutputStream oos = new ObjectOutputStream(s.getOutputStream());
-                    oos.writeObject(person);
+                    oos.writeObject(genre);
+                    oos.writeObject(artist);
 //                    byte[] byteToTransfer = oos;
                     oos.close();
 
