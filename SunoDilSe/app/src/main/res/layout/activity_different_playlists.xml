@@ -7,48 +7,90 @@
     android:orientation="vertical"
     tools:context="com.example.ishaandhamija.sunodilse.DifferentPlaylistsActivity">
 
-    <TextView
+    <FrameLayout
         android:layout_width="match_parent"
-        android:gravity="center"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:layout_gravity="center"
-        android:textSize="50dp"
-        android:text="Songs"
-        android:textColor="#000"
-        android:id="@+id/songs"/>
+        >
 
-    <TextView
-        android:layout_width="match_parent"
-        android:gravity="center"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:layout_gravity="center"
-        android:textSize="50dp"
-        android:text="Artists"
-        android:textColor="#000"
-        android:id="@+id/artists"/>
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/bg_gradient3"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textSize="30sp"
+            android:text="SONGS"
+            android:textColor="@android:color/white"
+            android:textStyle="bold"/>
 
-    <TextView
-        android:layout_width="match_parent"
-        android:gravity="center"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:layout_gravity="center"
-        android:textSize="50dp"
-        android:text="Genres"
-        android:textColor="#000"
-        android:id="@+id/genres"/>
 
-    <TextView
+    </FrameLayout>
+    <FrameLayout
         android:layout_width="match_parent"
-        android:gravity="center"
         android:layout_height="0dp"
-        android:layout_weight="1"
-        android:layout_gravity="center"
-        android:textSize="50dp"
-        android:text="Albums"
-        android:textColor="#000"
-        android:id="@+id/albums"/>
+        android:layout_weight="1">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/bg_gradient4"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textSize="30sp"
+            android:text="ARTIST"
+            android:textColor="@android:color/white"
+            android:textStyle="bold"/>
+
+
+    </FrameLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/bg_gradient2"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="GENRE"
+            android:textColor="@android:color/white"
+            android:textSize="30sp"
+            android:textStyle="bold"/>
+
+
+    </FrameLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/bg_gradient"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="ALBUMS"
+            android:textColor="@android:color/white"
+            android:textSize="30sp"
+            android:textStyle="bold"/>
+
+
+    </FrameLayout>
 
 </LinearLayout>

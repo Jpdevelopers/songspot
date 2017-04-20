@@ -1,21 +1,20 @@
 package com.example.ishaandhamija.sunodilse;
 
 import android.content.ContentResolver;
-<<<<<<< HEAD
 import android.content.Intent;
 import android.database.Cursor;
-=======
->>>>>>> 0ee41d218a8e383d75cc341f42a64d6cd22b7be6
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -39,7 +38,6 @@ public class CategoryActivity extends AppCompatActivity {
         String[] proj2 = {"distinct " + MediaStore.Audio.Media.ALBUM};
         String[] proj3 = {MediaStore.Audio.Genres.NAME, MediaStore.Audio.Genres._ID};
 
-<<<<<<< HEAD
 
         if (getIntent().getIntExtra("pos", 0) == 0) {
             musicCursor = musicResolver.query(musicUri, null, null, null, null);
@@ -56,9 +54,9 @@ public class CategoryActivity extends AppCompatActivity {
             musicCursor = musicResolver.query(musicUri, proj2, null, null, null);
 //            musicCursor = managedQuery(musicUri, null, null, null, null);
         }
-=======
-       /* Cursor musicCursor = musicResolver.query(musicUri, proj1, null, new String[]{""=""}, null);
->>>>>>> 0ee41d218a8e383d75cc341f42a64d6cd22b7be6
+
+//        Cursor musicCursor = musicResolver.query(musicUri, proj1, null, new String[]{""=""}, null);
+
 
         if(musicCursor == null){
             Toast.makeText(this, "No Songs", Toast.LENGTH_SHORT).show();
@@ -131,7 +129,7 @@ public class CategoryActivity extends AppCompatActivity {
                 Log.d("Hello", "getSongList: No Artists");
             }
         }
-*/
+
         rvList2 = (RecyclerView) findViewById(R.id.rvList2);
         FeedAdapter feedAdapter = new FeedAdapter();
 

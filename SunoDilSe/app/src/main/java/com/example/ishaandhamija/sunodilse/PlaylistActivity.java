@@ -8,6 +8,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.media.MediaMetadataRetriever;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.net.wifi.WifiManager;
@@ -37,10 +39,9 @@ public class PlaylistActivity extends AppCompatActivity {
     RecyclerView rvList;
     public static ArrayList<Song> songList;
     public static MediaPlayer mp = new MediaPlayer();
-<<<<<<< HEAD
-=======
+
     //    Button btnPlaylists;
->>>>>>> 0ee41d218a8e383d75cc341f42a64d6cd22b7be6
+
     private Boolean isFabOpen = false;
     private FloatingActionButton fab,fab1,fab2;
     private Animation fab_open,fab_close,rotate_forward,rotate_backward;
@@ -82,6 +83,7 @@ public class PlaylistActivity extends AppCompatActivity {
                     startActivityForResult(intent,HOTSPOT_ACTIVITY);
                 }
                 else{
+                    new ServerAsynkTask().execute();
                     Toast.makeText(PlaylistActivity.this, "Server will be created", Toast.LENGTH_SHORT).show();
                 }
 
