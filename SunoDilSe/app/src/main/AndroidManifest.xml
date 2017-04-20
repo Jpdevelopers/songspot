@@ -5,7 +5,12 @@
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+<<<<<<< HEAD
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+=======
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
+    <uses-permission android:name="android.permission.INTERNET"/>
+>>>>>>> c821c0749d8ba8815089279221fadd3f9cff23dc
 
     <application
         android:allowBackup="true"
@@ -26,6 +31,7 @@
         <activity
             android:name=".PlaylistActivity"
             android:screenOrientation="portrait">
+<<<<<<< HEAD
 
             <!-- <intent-filter> -->
             <!-- <action android:name="android.intent.action.MAIN" /> -->
@@ -33,6 +39,8 @@
 
             <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
             <!-- </intent-filter> -->
+=======
+>>>>>>> c821c0749d8ba8815089279221fadd3f9cff23dc
         </activity>
         <activity
             android:name=".SongPlayActivity"

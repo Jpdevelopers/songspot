@@ -3,6 +3,13 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/SunoDilSe.iml" filepath="$PROJECT_DIR$/SunoDilSe.iml" />
+<<<<<<< HEAD
+=======
+      <module fileurl="file://$PROJECT_DIR$/SunoDilSe.iml" filepath="$PROJECT_DIR$/SunoDilSe.iml" />
+      <module fileurl="file://$PROJECT_DIR$/SunoDilSe.iml" filepath="$PROJECT_DIR$/SunoDilSe.iml" />
+      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+>>>>>>> c821c0749d8ba8815089279221fadd3f9cff23dc
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>

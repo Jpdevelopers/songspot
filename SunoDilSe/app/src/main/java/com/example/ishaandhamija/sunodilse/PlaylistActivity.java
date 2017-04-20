@@ -39,7 +39,13 @@ public class PlaylistActivity extends AppCompatActivity {
     RecyclerView rvList;
     public static ArrayList<Song> songList;
     public static MediaPlayer mp = new MediaPlayer();
+<<<<<<< HEAD
     //    Button btnPlaylists;
+=======
+
+    //    Button btnPlaylists;
+
+>>>>>>> c821c0749d8ba8815089279221fadd3f9cff23dc
     private Boolean isFabOpen = false;
     private FloatingActionButton fab,fab1,fab2;
     private Animation fab_open,fab_close,rotate_forward,rotate_backward;
@@ -72,6 +78,13 @@ public class PlaylistActivity extends AppCompatActivity {
         fab1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Toast.makeText(PlaylistActivity.this, "Fab 1", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        fab2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
                 if(!isHotspotEnable()){
                     Intent intent = new Intent(Intent.ACTION_MAIN);
                     intent.addCategory(Intent.CATEGORY_LAUNCHER);
@@ -81,16 +94,9 @@ public class PlaylistActivity extends AppCompatActivity {
                     startActivityForResult(intent,HOTSPOT_ACTIVITY);
                 }
                 else{
+                    new ServerAsynkTask().execute();
                     Toast.makeText(PlaylistActivity.this, "Server will be created", Toast.LENGTH_SHORT).show();
                 }
-
-                Toast.makeText(PlaylistActivity.this, "Fab 1", Toast.LENGTH_SHORT).show();
-            }
-        });
-
-        fab2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
                 Toast.makeText(PlaylistActivity.this, "Fab 2", Toast.LENGTH_SHORT).show();
             }
         });

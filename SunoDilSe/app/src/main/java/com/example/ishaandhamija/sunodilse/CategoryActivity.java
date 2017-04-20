@@ -54,7 +54,13 @@ public class CategoryActivity extends AppCompatActivity {
             musicCursor = musicResolver.query(musicUri, proj2, null, null, null);
 //            musicCursor = managedQuery(musicUri, null, null, null, null);
         }
+<<<<<<< HEAD
 //       Cursor musicCursor = musicResolver.query(musicUri, proj1, null, new String[]{""=""}, null);
+=======
+
+//        Cursor musicCursor = musicResolver.query(musicUri, proj1, null, new String[]{""=""}, null);
+
+>>>>>>> c821c0749d8ba8815089279221fadd3f9cff23dc
 
         if(musicCursor == null){
             Toast.makeText(this, "No Songs", Toast.LENGTH_SHORT).show();

@@ -1,33 +1,24 @@
 package com.example.ishaandhamija.sunodilse;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.TextView;
-import android.widget.ToggleButton;
-
-import java.util.ArrayList;
+import android.widget.ImageView;
 
 public class DifferentPlaylistsActivity extends AppCompatActivity {
 
-    TextView songs, artists, genres, albums;
+    ImageView songs, artists, genres, albums;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_different_playlists);
 
-        songs = (TextView) findViewById(R.id.songs);
-        artists = (TextView) findViewById(R.id.artists);
-        genres = (TextView) findViewById(R.id.genres);
-        albums = (TextView) findViewById(R.id.albums);
+        songs = (ImageView) findViewById(R.id.songs);
+        artists = (ImageView) findViewById(R.id.artists);
+        genres = (ImageView) findViewById(R.id.genres);
+        albums = (ImageView) findViewById(R.id.albums);
 
         songs.setOnClickListener(new View.OnClickListener() {
             @Override
