@@ -1,7 +1,6 @@
 package com.example.ishaandhamija.sunodilse;
 
 import android.annotation.SuppressLint;
-import android.content.ComponentName;
 import android.content.ContentResolver;
 import android.content.ContentUris;
 import android.content.Context;
@@ -29,8 +28,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.util.ArrayList;
 
 public class PlaylistActivity extends AppCompatActivity implements AsyncResponse {
@@ -43,7 +40,7 @@ public class PlaylistActivity extends AppCompatActivity implements AsyncResponse
     public ArrayList<String> genres;
     public ArrayList<String> artists;
     public static MediaPlayer mp = new MediaPlayer();
-    ServerAsynkTask serverAsynkTask = new ServerAsynkTask();
+    ServerAsynkTask serverAsynkTask = new ServerAsynkTask(PlaylistActivity.this);
 
     private Boolean isFabOpen = false;
     private FloatingActionButton fab,fab1,fab2;
@@ -58,53 +55,53 @@ public class PlaylistActivity extends AppCompatActivity implements AsyncResponse
 
 //        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
 //        setSupportActionBar(toolbar);
-        fab = (FloatingActionButton)findViewById(R.id.fab);
+       /* fab = (FloatingActionButton)findViewById(R.id.fab);
         fab1 = (FloatingActionButton)findViewById(R.id.fab1);
-        fab2 = (FloatingActionButton)findViewById(R.id.fab2);
+        fab2 = (FloatingActionButton)findViewById(R.id.fab2);*/
         wifi=(WifiManager) getSystemService(Context.WIFI_SERVICE);
         fab_open = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fab_open);
         fab_close = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.fab_close);
         rotate_forward = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.rotate_forward);
         rotate_backward = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.rotate_backward);
 
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                animateFAB();
-            }
-        });
-
-        fab1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(PlaylistActivity.this, "Fab 1", Toast.LENGTH_SHORT).show();
-                startActivity(new Intent(PlaylistActivity.this,CheckListActivity.class));
-            }
-        });
-
-        fab2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(!isHotspotEnable()){
-                    Intent intent = new Intent(Intent.ACTION_MAIN);
-                    intent.addCategory(Intent.CATEGORY_LAUNCHER);
-                    final ComponentName cn = new ComponentName("com.android.settings", "com.android.settings.TetherSettings");
-                    intent.setComponent(cn);
-                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    startActivityForResult(intent,HOTSPOT_ACTIVITY);
-                }
-                else{
-//                    serverAsynkTask.delegate = (AsyncResponse) PlaylistActivity.this;
-                    serverAsynkTask.delegate = PlaylistActivity.this;
-                    serverAsynkTask.execute();
-                    AlgorithmToSelectSongs algorithmToSelectSongs = new AlgorithmToSelectSongs(genres, artists);
-//                    finalList = algorithmToSelectSongs.
-                    //new ServerAsynkTask().execute();
-                    Toast.makeText(PlaylistActivity.this, "Server is created", Toast.LENGTH_SHORT).show();
-                }
-                Toast.makeText(PlaylistActivity.this, "Fab 2", Toast.LENGTH_SHORT).show();
-            }
-        });
+//        fab.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                animateFAB();
+//            }
+//        });
+//
+//        fab1.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Toast.makeText(PlaylistActivity.this, "Fab 1", Toast.LENGTH_SHORT).show();
+//                startActivity(new Intent(PlaylistActivity.this,CheckListActivity.class));
+//            }
+//        });
+//
+//        fab2.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                if(!isHotspotEnable()){
+//                    Intent intent = new Intent(Intent.ACTION_MAIN);
+//                    intent.addCategory(Intent.CATEGORY_LAUNCHER);
+//                    final ComponentName cn = new ComponentName("com.android.settings", "com.android.settings.TetherSettings");
+//                    intent.setComponent(cn);
+//                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//                    startActivityForResult(intent,HOTSPOT_ACTIVITY);
+//                }
+//                else{
+////                    serverAsynkTask.delegate = (AsyncResponse) PlaylistActivity.this;
+//                    serverAsynkTask.delegate = PlaylistActivity.this;
+//                    serverAsynkTask.execute();
+//                    AlgorithmToSelectSongs algorithmToSelectSongs = new AlgorithmToSelectSongs(genres, artists);
+////                    finalList = algorithmToSelectSongs.
+//                    //new ServerAsynkTask().execute();
+//                    Toast.makeText(PlaylistActivity.this, "Server is created", Toast.LENGTH_SHORT).show();
+//                }
+//                Toast.makeText(PlaylistActivity.this, "Fab 2", Toast.LENGTH_SHORT).show();
+//            }
+//        });
 
         songList = new ArrayList<>();
         getSongList();
@@ -121,7 +118,7 @@ public class PlaylistActivity extends AppCompatActivity implements AsyncResponse
 
     }
 
-    private boolean isHotspotEnable() {
+   /* private boolean isHotspotEnable() {
         Method[] wmMethods = wifi.getClass().getDeclaredMethods();
         for (Method method: wmMethods) {
             if (method.getName().equals("isWifiApEnabled")) {
@@ -142,7 +139,7 @@ public class PlaylistActivity extends AppCompatActivity implements AsyncResponse
             }
         }
         return false;
-    }
+    }*/
 
 
     public void getSongList(){
@@ -440,7 +437,7 @@ public class PlaylistActivity extends AppCompatActivity implements AsyncResponse
         }
     }
 
-    @Override
+   /* @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if(requestCode==HOTSPOT_ACTIVITY){
             if(!isHotspotEnable()){
@@ -451,7 +448,7 @@ public class PlaylistActivity extends AppCompatActivity implements AsyncResponse
             }
         }
         super.onActivityResult(requestCode, resultCode, data);
-    }
+    }*/
 
     public static ArrayList<Song> getWeightedSongList(){
         return weightedSongList;

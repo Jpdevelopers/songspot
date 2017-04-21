@@ -12,10 +12,12 @@ public class CustomActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_custom);
         dataBase=new SongsDataBase(CustomActivity.this);
-        Cursor ans=dataBase.getTitle();
+        Cursor ans=dataBase.getSortedData();
         ans.moveToFirst();
         while(ans.moveToNext()){
             Log.d("DATA", "onCreate: "+ans.getString(0));
+            Log.d("DATA", "onCreate: "+ans.getString(1));
+            Log.d("DATA", "onCreate: "+ans.getInt(4));
         }
     }
 }

@@ -1,5 +1,6 @@
 package com.example.ishaandhamija.sunodilse;
 
+import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Looper;
 import android.util.Log;
@@ -16,8 +17,13 @@ class ServerAsynkTask extends AsyncTask<Void,Void,ArrayList<ArrayList<String>>> 
 
     public static ArrayList<String> genre;
     public static ArrayList<String> artist;
-
+    SongsDataBase mDataBase;
     public AsyncResponse delegate = null;
+    Context context;
+
+    public ServerAsynkTask(Context context) {
+        this.context=context;
+    }
 
     @Override
     protected ArrayList<ArrayList<String>> doInBackground(Void... params) {
@@ -26,7 +32,7 @@ class ServerAsynkTask extends AsyncTask<Void,Void,ArrayList<ArrayList<String>>> 
                 Looper.prepare();
 
             Log.e("NETWORKKK","doinnnn");
-
+            mDataBase=new SongsDataBase(context);
             Boolean end = false;
             ServerSocket ss = new ServerSocket(12344);
             Log.e("NETWORKKK","server created");
@@ -37,21 +43,19 @@ class ServerAsynkTask extends AsyncTask<Void,Void,ArrayList<ArrayList<String>>> 
                     Log.e("NETWORKKK","inloop");
                     Socket s = ss.accept();
                     Log.d("NETWORKKK", "connected to client");
-
-                /*BufferedReader input = new BufferedReader(new InputStreamReader(s.getInputStream()));
-//               PrintWriter output = new PrintWriter(s.getOutputStream(),true); //Autoflush
-                String st = input.readLine();
-                Log.d("NETWORKKK", "From client: "+st);*/
-//                ByteArrayInputStream bis = new ByteArrayInputStream(bytesFromSocket);
                     ObjectInputStream ois = new ObjectInputStream(s.getInputStream());
                     genre = (ArrayList<String>) ois.readObject();
                     artist= (ArrayList<String>) ois.readObject();
                     Log.e("server",genre.toString());
                     Log.e("doInBackground: ",artist.toString());
                     s.close();
-//                if (st!=null){
-//                    end = true;
-//                }
+                    for(int i=0;i<genre.size();i++){
+                        mDataBase.updateWeightByGenre(genre.get(i));
+                    }
+                    for(int i=0;i<artist.size();i++){
+                        mDataBase.updateWeightByArtist(artist.get(i));
+                    }
+
                     //break;
 
                 }

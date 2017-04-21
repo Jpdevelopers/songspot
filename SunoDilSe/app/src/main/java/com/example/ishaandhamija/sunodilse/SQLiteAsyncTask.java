@@ -7,7 +7,6 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.provider.MediaStore;
 import android.util.Log;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -54,17 +53,6 @@ public class SQLiteAsyncTask extends AsyncTask<Context, Void, ArrayList<Weighted
                 String thisGenre = "abc";
                 Log.d("ASY", "doInBackground: "+thisId);
                 db.insertData(thisId,thisTitle,thisArtist,thisGenre);
-
-//                    Uri trackUri = ContentUris.withAppendedId(
-//                            android.provider.MediaStore.Audio.Media.EXTERNAL_CONTENT_URI,
-//                            thisId);
-//                    Bitmap bitmap = null;
-//                    MediaMetadataRetriever mmr = new MediaMetadataRetriever();
-//                    mmr.setDataSource(getApplicationContext(), trackUri);
-//                    byte[] data = mmr.getEmbeddedPicture();
-//                    if (data != null) {
-//                        bitmap = BitmapFactory.decodeByteArray(data, 0, data.length);
-//                    }
 
                 songList.add(new WeightedSongs(thisId, thisTitle, thisArtist, thisGenre));
             } while (musicCursor.moveToNext());

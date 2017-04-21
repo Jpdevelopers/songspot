@@ -3,7 +3,6 @@ package com.example.ishaandhamija.sunodilse;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
-import android.database.DatabaseErrorHandler;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.widget.Toast;
@@ -55,22 +54,26 @@ public class SongsDataBase extends SQLiteOpenHelper {
     }
     public void updateWeightByArtist(String artist){
         SQLiteDatabase db=this.getWritableDatabase();
-        db.execSQL("UPDATE "+TABLE_NAME+" SET WEIGHT = WEIGHT + 1 WHERE ARTIST = "+artist);
+        db.execSQL("UPDATE "+TABLE_NAME+" SET WEIGHT = WEIGHT + 1 WHERE ARTIST = '"+artist+"'");
         Toast.makeText(context, "WEIGHT UPDATED BY ARTIST", Toast.LENGTH_SHORT).show();
     }
     public void updateWeightByGenre(String genre){
         SQLiteDatabase db=this.getWritableDatabase();
-        db.execSQL("UPDATE "+TABLE_NAME+" SET WEIGHT = WEIGHT + 1 WHERE GENRE = "+genre);
+        db.execSQL("UPDATE "+TABLE_NAME+" SET WEIGHT = WEIGHT + 1 WHERE GENRE = '"+genre+"'");
         Toast.makeText(context, "WEIGHT UPDATED BY GENRE", Toast.LENGTH_SHORT).show();
     }
     public Cursor getSortedData(){
         SQLiteDatabase db=this.getWritableDatabase();
-        Cursor res=db.rawQuery("SELECT TITLE FROM "+TABLE_NAME+" WHERE WEIGHT>0 ORDER BY WEIGHT DESC",null);
+        Cursor res=db.rawQuery("SELECT * FROM "+TABLE_NAME+" WHERE WEIGHT>0 ORDER BY WEIGHT DESC",null);
         return res;
     }
     public Cursor getTitle(){
         SQLiteDatabase db=this.getWritableDatabase();
         Cursor ans=db.rawQuery("SELECT TITLE FROM "+TABLE_NAME,null);
         return ans;
+    }
+    public void deleteEntries(){
+        SQLiteDatabase db=this.getWritableDatabase();
+        db.execSQL("DELETE from "+TABLE_NAME);
     }
 }
