@@ -24,7 +24,7 @@
             <li><a href="team.html" class="navLink">Our Team</a></li>
           </ul>
           <ul id="nav-mobile" class="side-nav">
-            <li><a href="index.html black-text">Home</a></li>
+            <li><a href="index.html" class="navLink black-text">Home</a></li>
             <li class="active"><a href="" class="navLink black-text">Download</a></li>
             <li><a href="team.html" class="navLink black-text">Our Team</a></li>
           </ul>
@@ -34,23 +34,34 @@
     </div><br><br>
     <div class="container">
     <div class="row">
-    <div class="col l6 m6 s12">
-    <img src ="snapshot.jpg" id="snapshot" class="hoverable z-depth-4">
+    <div class="col l4 m5 s12">
+    <div class="slider">
+            <ul class="slides">
+              <li>
+                <img src ="snapshot1.jpg" id="snapshot" class="hoverable z-depth-4">
+              </li>
+              <li>
+                <img src ="snapshot2.jpg" id="snapshot" class="hoverable z-depth-4">
+              </li>
+              <li>
+                <img src ="snapshot3.jpg" id="snapshot" class="hoverable z-depth-4">
+              </li>
+            </ul>
+          </div>
+    <br>
     </div>
-    <div class="col l6 m6 s12">
-        <h4 class="custom-text2 grey-text center">Get the app</h4>
+    <div class="col l6 offset-l1 m6 s12">
+        <h4 class="custom-text2 grey-text center">Get the app</h4><br>
         <div class=" row">
-        <div class="col l6 m6 s6 offset-s3"><img src = "play_store.png" class="dwnld-logo"></div>
-        <div class="col l6 m6 s6 offset-s3"><img src = "apple_store.png" class="dwnld-logo"></div>
-        <div class="col l6 m6 s6 offset-s3"><img src = "windows.png" class="dwnld-logo"></div>
+        <div class="col l4 offset-l2 m6 s6 offset-s3"><img src = "play_store.png" class="dwnld-logo"></div>
+        <div class="col l4 m6 s6 offset-s3"><img src = "windows.png" class="dwnld-logo"></div>
         </div>
     </div>
     </div>
     </div>
-<br><br>
-
-    <center><i class="material-icons blue-text medium scroll" style="cursor:pointer">navigation</i></center>
-    <footer class="page-footer">
+   <!--
+    <center><i class="material-icons blue-text medium scroll" style="cursor:pointer">navigation</i></center>-->
+    <footer class="page-footer"><!--
     <div class="smallScreen">
       <ul class="collapsible" data-collapsible="accordion">
                         <li>
@@ -145,13 +156,15 @@
           </div>
         </div>
       </div>
+      -->
       <div class="footer-copyright">
         <div class="container foot row">
-          <div class="col l2 m4 s6 white-text">Privacy Policy</div>
-          <div class="col l4 m4 s6 white-text">Terms of Service</div>
+          <div class="col l2 m4 s6 white-text"><a href="" class="white-text">Privacy Policy</a></div>
+          <div class="col l4 m4 s6 white-text"><a href="" class="white-text">Terms of Service</a></div>
         </div>
       </div>
     </footer>
+
     <script>
     $(document).ready(function(){
     $(".dropdown-button").dropdown({
@@ -160,6 +173,7 @@
     gutter: 0,
     belowOrigin: true
     });
+    $('.slider').slider({full_width: true});
     $('.button-collapse').sideNav();
      $('.collapsible').collapsible();
      $('.scroll').click(function() {

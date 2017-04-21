@@ -16,6 +16,7 @@ body{
 footer.page-footer{
 	font-family: 'Ropa Sans';
 	background:#eceff1;	
+	padding-top:0;
 }
 footer.page-footer .footer-copyright {
 	background: #263238;
@@ -44,20 +45,39 @@ nav{
 	color:white;
 }
 .collapsible-body ul li p{ line-height:1%;padding:20px;}
-
+.slider .slides{background-color:#fafafa;margin:0;min-height:480px}
+.slider .indicators .indicator-item.active{background-color:#0288d1}
 @media only screen and (min-width:800px){.smallScreen{display:none;}
+.slider {min-height:525px;}
+.slider .slides{min-height:500px;}
+.slider .slides li{overflow:visible;}
 #snapshot {
-	height:420px;
-	width:280px;
+	height:439px;
+	width:260px;
+	margin-left:25px;
 	border-radius:8px;
 }.dwnld-logo{
 	width:80%;height:auto;
 }
 }
-@media only screen and (max-width:499px){.largeScreen{display:none;}
+
+@media only screen and (max-width:769px){.largeScreen{display:none;}
 #snapshot {
-	height:auto;
-	width:100%;
+	height:400px;
+	width:240px;
+	border-radius:8px;
+}.dwnld-logo{
+	width:100%;height:50%;
+}
+}
+@media only screen and (max-width:499px){.largeScreen{display:none;}
+.slider {min-height:500px;}
+.slider .slides{min-height:480px;}
+.slider .slides li{overflow:visible;}
+#snapshot {
+	height:439px;
+	width:260px;
+	margin-left:45px;
 	border-radius:8px;
 }.dwnld-logo{
 	width:100%;height:50%;
