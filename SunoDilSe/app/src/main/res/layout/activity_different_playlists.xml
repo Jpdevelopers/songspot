@@ -97,5 +97,29 @@
 
 
     </FrameLayout>
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+
+        >
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/bg_gradient3"
+            android:id="@+id/selected_song"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textSize="30sp"
+            android:text="CUSTOM SONGS"
+            android:textColor="@android:color/white"
+            android:textStyle="bold"/>
+
+
+    </FrameLayout>
+
 
 </LinearLayout>

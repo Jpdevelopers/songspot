@@ -12,12 +12,15 @@ import java.net.UnknownHostException;
 import java.util.ArrayList;
 
 
-class ServerAsynkTask extends AsyncTask<Void,Void,Void> {
+class ServerAsynkTask extends AsyncTask<Void,Void,ArrayList<ArrayList<String>>> {
 
-    ArrayList<String> genre;
-    ArrayList<String> artist;
+    public static ArrayList<String> genre;
+    public static ArrayList<String> artist;
+
+    public AsyncResponse delegate = null;
+
     @Override
-    protected Void doInBackground(Void... params) {
+    protected ArrayList<ArrayList<String>> doInBackground(Void... params) {
         try {
             if(Looper.myLooper()==null)
                 Looper.prepare();
@@ -49,7 +52,7 @@ class ServerAsynkTask extends AsyncTask<Void,Void,Void> {
 //                if (st!=null){
 //                    end = true;
 //                }
-                    break;
+                    //break;
 
                 }
                 catch (Exception e)
@@ -70,5 +73,18 @@ class ServerAsynkTask extends AsyncTask<Void,Void,Void> {
             e.printStackTrace();
         }
         return null;
+    }
+
+    @Override
+    protected void onPostExecute(ArrayList<ArrayList<String>> arrayLists) {
+        delegate.processFinish(arrayLists);
+    }
+
+    public static ArrayList<String> getGList(){
+        return genre;
+    }
+
+    public static ArrayList<String> getAList(){
+        return artist;
     }
 }

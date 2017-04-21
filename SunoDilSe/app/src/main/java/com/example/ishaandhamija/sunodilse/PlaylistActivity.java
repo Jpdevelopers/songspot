@@ -33,15 +33,17 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 
-public class PlaylistActivity extends AppCompatActivity {
+public class PlaylistActivity extends AppCompatActivity implements AsyncResponse {
 
     private static final int HOTSPOT_ACTIVITY = 1234;
     RecyclerView rvList;
     public static ArrayList<Song> songList;
+    public static ArrayList<Song> weightedSongList;
+    public static ArrayList<WeightedSongs> finalList;
+    public ArrayList<String> genres;
+    public ArrayList<String> artists;
     public static MediaPlayer mp = new MediaPlayer();
-    //    Button btnPlaylists;
-
-    //    Button btnPlaylists;
+    ServerAsynkTask serverAsynkTask = new ServerAsynkTask();
 
     private Boolean isFabOpen = false;
     private FloatingActionButton fab,fab1,fab2;
@@ -92,9 +94,13 @@ public class PlaylistActivity extends AppCompatActivity {
                     startActivityForResult(intent,HOTSPOT_ACTIVITY);
                 }
                 else{
-                    new ServerAsynkTask().execute();
-                    Toast.makeText(PlaylistActivity.this, "Server will be created", Toast.LENGTH_SHORT).show();
-
+//                    serverAsynkTask.delegate = (AsyncResponse) PlaylistActivity.this;
+                    serverAsynkTask.delegate = PlaylistActivity.this;
+                    serverAsynkTask.execute();
+                    AlgorithmToSelectSongs algorithmToSelectSongs = new AlgorithmToSelectSongs(genres, artists);
+//                    finalList = algorithmToSelectSongs.
+                    //new ServerAsynkTask().execute();
+                    Toast.makeText(PlaylistActivity.this, "Server is created", Toast.LENGTH_SHORT).show();
                 }
                 Toast.makeText(PlaylistActivity.this, "Fab 2", Toast.LENGTH_SHORT).show();
             }
@@ -169,10 +175,13 @@ public class PlaylistActivity extends AppCompatActivity {
                 int titleColumn = musicCursor.getColumnIndex(MediaStore.Audio.Media.DISPLAY_NAME);
                 int idColumn = musicCursor.getColumnIndex(MediaStore.Audio.Media._ID);
                 int artistColumn = musicCursor.getColumnIndex(MediaStore.Audio.Media.ARTIST);
+                int genreColumn = musicCursor.getColumnIndex(MediaStore.Audio.Genres.NAME);
                 do{
                     long thisId = musicCursor.getLong(idColumn);
                     String thisTitle = musicCursor.getString(titleColumn);
                     String thisArtist = musicCursor.getString(artistColumn);
+//                    String thisGenre = musicCursor.getString(genreColumn);
+                    String thisGenre = "abc";
 
                     Uri trackUri = ContentUris.withAppendedId(
                             android.provider.MediaStore.Audio.Media.EXTERNAL_CONTENT_URI,
@@ -184,7 +193,7 @@ public class PlaylistActivity extends AppCompatActivity {
                     if (data != null) {
                         bitmap = BitmapFactory.decodeByteArray(data, 0, data.length);
                     }
-                    songList.add(new Song(thisId, thisTitle, thisArtist, bitmap));
+                    songList.add(new Song(thisId, thisTitle, thisArtist, bitmap, thisGenre));
                 }while (musicCursor.moveToNext());
             }
         }
@@ -206,6 +215,7 @@ public class PlaylistActivity extends AppCompatActivity {
                 int titleColumn = musicCursor.getColumnIndex(MediaStore.Audio.Media.DISPLAY_NAME);
                 int idColumn = musicCursor.getColumnIndex(MediaStore.Audio.Media._ID);
                 int artistColumn = musicCursor.getColumnIndex(MediaStore.Audio.Media.ARTIST);
+                int genreColumn = musicCursor.getColumnIndex(MediaStore.Audio.Genres.NAME);
                 do {
 
 //                    int titleColumn = musicCursor.getColumnIndexOrThrow(MediaStore.Audio.Media.DISPLAY_NAME);
@@ -216,6 +226,8 @@ public class PlaylistActivity extends AppCompatActivity {
                     long thisId = musicCursor.getLong(idColumn);
                     String thisTitle = musicCursor.getString(titleColumn);
                     String thisArtist = musicCursor.getString(artistColumn);
+//                    String thisGenre = musicCursor.getString(genreColumn);
+                    String thisGenre = "abc";
 
                     Uri trackUri = ContentUris.withAppendedId(
                           android.provider.MediaStore.Audio.Media.EXTERNAL_CONTENT_URI,
@@ -227,7 +239,7 @@ public class PlaylistActivity extends AppCompatActivity {
                     if (data != null) {
                         bitmap = BitmapFactory.decodeByteArray(data, 0, data.length);
                     }
-                    songList.add(new Song(thisId, thisTitle, thisArtist, bitmap));
+                    songList.add(new Song(thisId, thisTitle, thisArtist, bitmap, thisGenre));
                 } while(musicCursor.moveToNext());
             }
         }
@@ -245,10 +257,14 @@ public class PlaylistActivity extends AppCompatActivity {
                 int titleColumn = musicCursor.getColumnIndex(MediaStore.Audio.Media.DISPLAY_NAME);
                 int idColumn = musicCursor.getColumnIndex(MediaStore.Audio.Media._ID);
                 int artistColumn = musicCursor.getColumnIndex(MediaStore.Audio.Media.ARTIST);
+                int genreColumn = musicCursor.getColumnIndex(MediaStore.Audio.Genres.NAME);
                 do{
                     long thisId = musicCursor.getLong(idColumn);
                     String thisTitle = musicCursor.getString(titleColumn);
                     String thisArtist = musicCursor.getString(artistColumn);
+                    
+//                    String thisGenre = musicCursor.getString(genreColumn);
+                    String thisGenre = "abc";
 
                     Log.d("ALBUM WALA", "getSongList: " + thisTitle);
 
@@ -262,7 +278,7 @@ public class PlaylistActivity extends AppCompatActivity {
                     if (data != null) {
                         bitmap = BitmapFactory.decodeByteArray(data, 0, data.length);
                     }
-                    songList.add(new Song(thisId, thisTitle, thisArtist, bitmap));
+                    songList.add(new Song(thisId, thisTitle, thisArtist, bitmap, thisGenre));
                 }while (musicCursor.moveToNext());
             }
         }
@@ -285,12 +301,14 @@ public class PlaylistActivity extends AppCompatActivity {
                 int idColumn = musicCursor.getColumnIndex(MediaStore.Audio.Media._ID);
                 int artistColumn = musicCursor.getColumnIndex(MediaStore.Audio.Media.ARTIST);
                 int albumColumn = musicCursor.getColumnIndex(MediaStore.Audio.Media.ALBUM);
+//                int genreColumn = musicCursor.getColumnIndex(MediaStore.Audio.Genres.NAME);
 
                 do {
                     long thisId = musicCursor.getLong(idColumn);
                     String thisTitle = musicCursor.getString(titleColumn);
                     String thisArtist = musicCursor.getString(artistColumn);
-                    String thisAlbum = musicCursor.getString(albumColumn);
+//                    String thisGenre = musicCursor.getString(genreColumn);
+                    String thisGenre = "abc";
 
                     Uri trackUri = ContentUris.withAppendedId(
                             android.provider.MediaStore.Audio.Media.EXTERNAL_CONTENT_URI,
@@ -302,9 +320,18 @@ public class PlaylistActivity extends AppCompatActivity {
                     if (data != null) {
                         bitmap = BitmapFactory.decodeByteArray(data, 0, data.length);
                     }
-                    songList.add(new Song(thisId, thisTitle, thisArtist, bitmap));
+                    songList.add(new Song(thisId, thisTitle, thisArtist, bitmap, thisGenre));
                 } while (musicCursor.moveToNext());
             }
+            weightedSongList = songList;
+        }
+    }
+
+    @Override
+    public void processFinish(ArrayList<ArrayList<String>> output) {
+        for(int i=0;i<output.size();i++){
+            genres = output.get(0);
+            artists = output.get(1);
         }
     }
 
@@ -424,5 +451,9 @@ public class PlaylistActivity extends AppCompatActivity {
             }
         }
         super.onActivityResult(requestCode, resultCode, data);
+    }
+
+    public static ArrayList<Song> getWeightedSongList(){
+        return weightedSongList;
     }
 }
