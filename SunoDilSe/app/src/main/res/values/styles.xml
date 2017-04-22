@@ -7,5 +7,10 @@
         <item name="colorPrimaryDark">#202020</item>
         <item name="colorAccent">@color/colorAccent</item>
     </style>
+    <style name="NoBar" parent = "Theme.AppCompat.Light.NoActionBar">
+        <item name = "android:windowActionBar">false</item>
+        <item name = "android:windowNoTitle">true</item>
+    </style>
+
 
 </resources>

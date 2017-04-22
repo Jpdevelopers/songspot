@@ -9,7 +9,8 @@
     <android.support.v7.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/rvList2">
+        android:id="@+id/rvList2"
+        android:background="#3D3B4A">
 
     </android.support.v7.widget.RecyclerView>
 
