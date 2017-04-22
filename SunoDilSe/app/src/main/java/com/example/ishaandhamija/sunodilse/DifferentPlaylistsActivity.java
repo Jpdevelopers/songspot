@@ -17,6 +17,7 @@ import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.lang.reflect.InvocationTargetException;
@@ -26,6 +27,7 @@ public class DifferentPlaylistsActivity extends AppCompatActivity {
     private static final int HOTSPOT_ACTIVITY = 1234;
     private static final int REQUEST_CODE = 3065;
     ImageView songs, artists, genres, albums,customSongs;
+    TextView client,server;
     SongsDataBase mDataBase;
     private Boolean isFabOpen = false;
     private FloatingActionButton fab,fab1,fab2;
@@ -43,6 +45,8 @@ public class DifferentPlaylistsActivity extends AppCompatActivity {
         fab1 = (FloatingActionButton)findViewById(R.id.fab1);
         fab2 = (FloatingActionButton)findViewById(R.id.fab2);
         mDataBase=new SongsDataBase(this);
+        client= (TextView) findViewById(R.id.Client);
+        server= (TextView) findViewById(R.id.Server);
         songs = (ImageView) findViewById(R.id.songs);
         artists = (ImageView) findViewById(R.id.artists);
         genres = (ImageView) findViewById(R.id.genres);
@@ -124,6 +128,7 @@ public class DifferentPlaylistsActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent=new Intent(DifferentPlaylistsActivity.this,CustomActivity.class);
+                intent.putExtra("pos",4);
                 startActivity(intent);
             }
         });
@@ -182,8 +187,11 @@ public class DifferentPlaylistsActivity extends AppCompatActivity {
 
     @Override
     protected void onDestroy() {
+        Log.d("DELETE", "onDestroy: in it");
         mDataBase.deleteEntries();
+        mDataBase.closeDB();
         super.onDestroy();
+
     }
     public void animateFAB(){
 
@@ -192,6 +200,8 @@ public class DifferentPlaylistsActivity extends AppCompatActivity {
             fab.startAnimation(rotate_backward);
             fab1.startAnimation(fab_close);
             fab2.startAnimation(fab_close);
+            client.startAnimation(fab_close);
+            server.startAnimation(fab_close);
             fab1.setClickable(false);
             fab2.setClickable(false);
             isFabOpen = false;
@@ -201,6 +211,8 @@ public class DifferentPlaylistsActivity extends AppCompatActivity {
             fab.startAnimation(rotate_forward);
             fab1.startAnimation(fab_open);
             fab2.startAnimation(fab_open);
+            server.startAnimation(fab_open);
+            client.startAnimation(fab_open);
             fab1.setClickable(true);
             fab2.setClickable(true);
             isFabOpen = true;

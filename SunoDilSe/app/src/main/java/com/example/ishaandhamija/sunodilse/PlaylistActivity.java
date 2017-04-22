@@ -160,6 +160,7 @@ public class PlaylistActivity extends AppCompatActivity implements AsyncResponse
 ////        }
 
         if (getIntent().getIntExtra("pos",0) == 1){
+            String[] genresProjection = {MediaStore.Audio.Genres.NAME, MediaStore.Audio.Genres._ID};
             String naam = getIntent().getStringExtra("artist");
             musicCursor = musicResolver.query(musicUri, proj1,MediaStore.Audio.Media.ARTIST + "='" + naam+"'", null, null);
 
@@ -173,12 +174,15 @@ public class PlaylistActivity extends AppCompatActivity implements AsyncResponse
                 int idColumn = musicCursor.getColumnIndex(MediaStore.Audio.Media._ID);
                 int artistColumn = musicCursor.getColumnIndex(MediaStore.Audio.Media.ARTIST);
                 int genreColumn = musicCursor.getColumnIndex(MediaStore.Audio.Genres.NAME);
+
+                Cursor genresCursor = managedQuery(MediaStore.Audio.Genres.EXTERNAL_CONTENT_URI,genresProjection,null,null,null);
+                genresCursor.moveToFirst();
                 do{
                     long thisId = musicCursor.getLong(idColumn);
                     String thisTitle = musicCursor.getString(titleColumn);
                     String thisArtist = musicCursor.getString(artistColumn);
-//                    String thisGenre = musicCursor.getString(genreColumn);
-                    String thisGenre = "abc";
+
+                    String thisGenre = genresCursor.getString(0);
 
                     Uri trackUri = ContentUris.withAppendedId(
                             android.provider.MediaStore.Audio.Media.EXTERNAL_CONTENT_URI,
@@ -190,12 +194,23 @@ public class PlaylistActivity extends AppCompatActivity implements AsyncResponse
                     if (data != null) {
                         bitmap = BitmapFactory.decodeByteArray(data, 0, data.length);
                     }
-                    songList.add(new Song(thisId, thisTitle, thisArtist, bitmap, thisGenre));
+                    songList.add(new Song(thisId, thisTitle, thisArtist, bitmap));
                 }while (musicCursor.moveToNext());
             }
         }
 
+        if (getIntent().getIntExtra("CUSTOM",0) == 4){
+            Toast.makeText(this, "YOUR SELECTED SONGS", Toast.LENGTH_SHORT).show();
+            if (CustomActivity.getCustomSongsList() == null){
+                Toast.makeText(this, "No Songs", Toast.LENGTH_SHORT).show();
+            }
+            else{
+                songList = CustomActivity.getCustomSongsList();
+            }
+        }
+
          if (getIntent().getIntExtra("pos",0) == 2){
+             String[] genresProjection = {MediaStore.Audio.Genres.NAME, MediaStore.Audio.Genres._ID};
 //            musicCursor = musicResolver.query(musicUri, null, null, null, null);
             if (getIntent().hasExtra("uri")) {
                 uri = (Uri)getIntent().getParcelableExtra("uri");
@@ -213,6 +228,8 @@ public class PlaylistActivity extends AppCompatActivity implements AsyncResponse
                 int idColumn = musicCursor.getColumnIndex(MediaStore.Audio.Media._ID);
                 int artistColumn = musicCursor.getColumnIndex(MediaStore.Audio.Media.ARTIST);
                 int genreColumn = musicCursor.getColumnIndex(MediaStore.Audio.Genres.NAME);
+                Cursor genresCursor = managedQuery(MediaStore.Audio.Genres.EXTERNAL_CONTENT_URI,genresProjection,null,null,null);
+                genresCursor.moveToFirst();
                 do {
 
 //                    int titleColumn = musicCursor.getColumnIndexOrThrow(MediaStore.Audio.Media.DISPLAY_NAME);
@@ -223,8 +240,8 @@ public class PlaylistActivity extends AppCompatActivity implements AsyncResponse
                     long thisId = musicCursor.getLong(idColumn);
                     String thisTitle = musicCursor.getString(titleColumn);
                     String thisArtist = musicCursor.getString(artistColumn);
-//                    String thisGenre = musicCursor.getString(genreColumn);
-                    String thisGenre = "abc";
+
+                    String thisGenre = genresCursor.getString(0);
 
                     Uri trackUri = ContentUris.withAppendedId(
                           android.provider.MediaStore.Audio.Media.EXTERNAL_CONTENT_URI,
@@ -236,12 +253,13 @@ public class PlaylistActivity extends AppCompatActivity implements AsyncResponse
                     if (data != null) {
                         bitmap = BitmapFactory.decodeByteArray(data, 0, data.length);
                     }
-                    songList.add(new Song(thisId, thisTitle, thisArtist, bitmap, thisGenre));
+                    songList.add(new Song(thisId, thisTitle, thisArtist, bitmap));
                 } while(musicCursor.moveToNext());
             }
         }
 
         if (getIntent().getIntExtra("pos",0) == 3){
+            String[] genresProjection = {MediaStore.Audio.Genres.NAME, MediaStore.Audio.Genres._ID};
             String naam = getIntent().getStringExtra("album");
             musicCursor = musicResolver.query(musicUri, proj3,MediaStore.Audio.Media.ALBUM + "='" + naam+"'", null, null);
 
@@ -255,13 +273,14 @@ public class PlaylistActivity extends AppCompatActivity implements AsyncResponse
                 int idColumn = musicCursor.getColumnIndex(MediaStore.Audio.Media._ID);
                 int artistColumn = musicCursor.getColumnIndex(MediaStore.Audio.Media.ARTIST);
                 int genreColumn = musicCursor.getColumnIndex(MediaStore.Audio.Genres.NAME);
+                Cursor genresCursor = managedQuery(MediaStore.Audio.Genres.EXTERNAL_CONTENT_URI,genresProjection,null,null,null);
+                genresCursor.moveToFirst();
                 do{
                     long thisId = musicCursor.getLong(idColumn);
                     String thisTitle = musicCursor.getString(titleColumn);
                     String thisArtist = musicCursor.getString(artistColumn);
-                    
-//                    String thisGenre = musicCursor.getString(genreColumn);
-                    String thisGenre = "abc";
+
+                    String thisGenre = genresCursor.getString(0);
 
                     Log.d("ALBUM WALA", "getSongList: " + thisTitle);
 
@@ -275,7 +294,7 @@ public class PlaylistActivity extends AppCompatActivity implements AsyncResponse
                     if (data != null) {
                         bitmap = BitmapFactory.decodeByteArray(data, 0, data.length);
                     }
-                    songList.add(new Song(thisId, thisTitle, thisArtist, bitmap, thisGenre));
+                    songList.add(new Song(thisId, thisTitle, thisArtist, bitmap));
                 }while (musicCursor.moveToNext());
             }
         }
@@ -285,6 +304,7 @@ public class PlaylistActivity extends AppCompatActivity implements AsyncResponse
 //                uri = (Uri)getIntent().getParcelableExtra("uri");musicCursor = musicResolver.query(uri,null,MediaStore.Audio.Genres.NAME+"='Club'", null, null);
 //
         if (getIntent().getIntExtra("pos",0) == 0) {
+            String[] genresProjection = {MediaStore.Audio.Genres.NAME, MediaStore.Audio.Genres._ID};
 
             musicCursor = musicResolver.query(musicUri, null, null, null, null);
 
@@ -300,12 +320,14 @@ public class PlaylistActivity extends AppCompatActivity implements AsyncResponse
                 int albumColumn = musicCursor.getColumnIndex(MediaStore.Audio.Media.ALBUM);
 //                int genreColumn = musicCursor.getColumnIndex(MediaStore.Audio.Genres.NAME);
 
+                Cursor genresCursor = managedQuery(MediaStore.Audio.Genres.EXTERNAL_CONTENT_URI,genresProjection,null,null,null);
+                genresCursor.moveToFirst();
                 do {
                     long thisId = musicCursor.getLong(idColumn);
                     String thisTitle = musicCursor.getString(titleColumn);
                     String thisArtist = musicCursor.getString(artistColumn);
 //                    String thisGenre = musicCursor.getString(genreColumn);
-                    String thisGenre = "abc";
+                    String thisGenre = genresCursor.getString(0);
 
                     Uri trackUri = ContentUris.withAppendedId(
                             android.provider.MediaStore.Audio.Media.EXTERNAL_CONTENT_URI,
@@ -317,7 +339,7 @@ public class PlaylistActivity extends AppCompatActivity implements AsyncResponse
                     if (data != null) {
                         bitmap = BitmapFactory.decodeByteArray(data, 0, data.length);
                     }
-                    songList.add(new Song(thisId, thisTitle, thisArtist, bitmap, thisGenre));
+                    songList.add(new Song(thisId, thisTitle, thisArtist, bitmap));
                 } while (musicCursor.moveToNext());
             }
             weightedSongList = songList;

@@ -32,6 +32,7 @@ public class SQLiteAsyncTask extends AsyncTask<Context, Void, ArrayList<Weighted
         ContentResolver musicResolver = params[0].getContentResolver();
         Uri musicUri = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI;
         db=new SongsDataBase(params[0]);
+        String[] genresProjection = {MediaStore.Audio.Genres.NAME, MediaStore.Audio.Genres._ID};
 
         Cursor musicCursor = musicResolver.query(musicUri, null, null, null, null);
 
@@ -44,18 +45,20 @@ public class SQLiteAsyncTask extends AsyncTask<Context, Void, ArrayList<Weighted
             int idColumn = musicCursor.getColumnIndex(MediaStore.Audio.Media._ID);
             int artistColumn = musicCursor.getColumnIndex(MediaStore.Audio.Media.ARTIST);
 //            int genreColumn = musicCursor.getColumnIndex(MediaStore.Audio.Genres.NAME);
+            Cursor genresCursor = musicResolver.query(MediaStore.Audio.Genres.EXTERNAL_CONTENT_URI,genresProjection,null,null,null);
+            genresCursor.moveToFirst();
 
             do {
                 long thisId = musicCursor.getLong(idColumn);
                 String thisTitle = musicCursor.getString(titleColumn);
                 String thisArtist = musicCursor.getString(artistColumn);
 //                String thisGenre = musicCursor.getString(genreColumn);
-                String thisGenre = "abc";
+                String thisGenre = genresCursor.getString(0);
                 Log.d("ASY", "doInBackground: "+thisId);
                 db.insertData(thisId,thisTitle,thisArtist,thisGenre);
 
-                songList.add(new WeightedSongs(thisId, thisTitle, thisArtist, thisGenre));
-            } while (musicCursor.moveToNext());
+                songList.add(new WeightedSongs(thisId, thisTitle, thisArtist));
+            } while (musicCursor.moveToNext() && genresCursor.moveToNext());
         }
         return songList;
     }

@@ -9,14 +9,12 @@ public class WeightedSongs {
     public long id;
     public String songName;
     public String artist;
-    public String genre;
     public Integer weight;
 
-    public WeightedSongs(long id,String songName, String artist, String genre) {
+    public WeightedSongs(long id,String songName, String artist) {
         this.id = id;
         this.songName = songName;
         this.artist = artist;
-        this.genre = genre;
         this.weight = 0;
     }
 
@@ -30,10 +28,6 @@ public class WeightedSongs {
 
     public String getArtist() {
         return artist;
-    }
-
-    public String getGenre() {
-        return genre;
     }
 
     public Integer getWeight() {

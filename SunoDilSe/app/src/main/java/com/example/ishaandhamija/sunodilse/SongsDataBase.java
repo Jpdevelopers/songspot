@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 import android.widget.Toast;
 
 /**
@@ -29,6 +30,7 @@ public class SongsDataBase extends SQLiteOpenHelper {
         "ARTIST TEXT,"+
         "GENRE TEXT,"+
         "WEIGHT INTEGER)");
+        Log.d("DELETE", "onCreate: DATABASE");
 
     }
 
@@ -64,7 +66,8 @@ public class SongsDataBase extends SQLiteOpenHelper {
     }
     public Cursor getSortedData(){
         SQLiteDatabase db=this.getWritableDatabase();
-        Cursor res=db.rawQuery("SELECT * FROM "+TABLE_NAME+" WHERE WEIGHT>0 ORDER BY WEIGHT DESC",null);
+        Cursor res=db.rawQuery("SELECT * FROM "+TABLE_NAME+" WHERE WEIGHT > 0 ORDER BY WEIGHT DESC",null);
+        Log.d("SORT", "getSortedData: ");
         return res;
     }
     public Cursor getTitle(){
@@ -74,6 +77,14 @@ public class SongsDataBase extends SQLiteOpenHelper {
     }
     public void deleteEntries(){
         SQLiteDatabase db=this.getWritableDatabase();
-        db.execSQL("DELETE from "+TABLE_NAME);
+        Log.d("DELETE", "deleteEntries: ");
+        db.delete(TABLE_NAME,null,null);
+        //db.execSQL("DELETE FROM "+TABLE_NAME);
+
+    }
+    public void closeDB() {
+        SQLiteDatabase db = this.getReadableDatabase();
+        if (db != null && db.isOpen())
+            db.close();
     }
 }

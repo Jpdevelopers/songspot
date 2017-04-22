@@ -12,14 +12,12 @@ class Song {
     private String title;
     private String artist;
     private Bitmap bitmap;
-    private String genre;
 
-    public Song(Long id, String title, String artist, Bitmap bitmap, String genre) {
+    public Song(Long id, String title, String artist, Bitmap bitmap) {
         this.id = id;
         this.title = title;
         this.artist = artist;
         this.bitmap = bitmap;
-        this.genre = genre;
     }
 
     public Long getId() {
@@ -38,7 +36,4 @@ class Song {
         return bitmap;
     }
 
-    public String getGenre() {
-        return genre;
-    }
 }
