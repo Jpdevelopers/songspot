@@ -8,6 +8,8 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 import android.widget.Toast;
 
+import static com.example.ishaandhamija.sunodilse.ServerAsynkTask.artist;
+
 /**
  * Created by ishaandhamija on 21/04/17.
  */
@@ -46,13 +48,17 @@ public class SongsDataBase extends SQLiteOpenHelper {
         contentValues.put("ID",""+id);
         contentValues.put("TITLE",title);
         contentValues.put("ARTIST",artist);
-        contentValues.put("GENRE",genre);
+        contentValues.put("GENRE","");
         contentValues.put("WEIGHT",0);
         long result=db.insert(TABLE_NAME,null,contentValues);
         if(result==-1){
             return false;
         }
         return true;
+    }
+    public void insertGenre(String id, String genre){
+        SQLiteDatabase db=this.getWritableDatabase();
+        db.execSQL("UPDATE "+TABLE_NAME+" SET GENRE "+genre+" WHERE ID = '"+id+"'");
     }
     public void updateWeightByArtist(String artist){
         SQLiteDatabase db=this.getWritableDatabase();

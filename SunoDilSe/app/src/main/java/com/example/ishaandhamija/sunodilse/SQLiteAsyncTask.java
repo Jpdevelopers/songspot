@@ -55,10 +55,17 @@ public class SQLiteAsyncTask extends AsyncTask<Context, Void, ArrayList<Weighted
 //                String thisGenre = musicCursor.getString(genreColumn);
                 String thisGenre = genresCursor.getString(0);
                 Log.d("ASY", "doInBackground: "+thisId);
-                db.insertData(thisId,thisTitle,thisArtist,thisGenre);
+                Log.d("ASY", "doInBackground:" +thisGenre);
+                db.insertData(thisId,thisTitle,thisArtist,null);
 
                 songList.add(new WeightedSongs(thisId, thisTitle, thisArtist));
-            } while (musicCursor.moveToNext() && genresCursor.moveToNext());
+            } while (musicCursor.moveToNext());
+
+//            genresCursor.moveToFirst();
+//            do{
+//                String thisGenre = genresCursor.getString(0);
+//                db.insertGenre(String.valueOf(musicCursor.getLong(idColumn)),thisGenre);
+//            }while (genresCursor.moveToFirst());
         }
         return songList;
     }

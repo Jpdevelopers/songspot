@@ -94,6 +94,7 @@ public class DifferentPlaylistsActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(DifferentPlaylistsActivity.this, PlaylistActivity.class);
+                i.putExtra("allSongs",1);
                 startActivity(i);
             }
         });
@@ -178,6 +179,8 @@ public class DifferentPlaylistsActivity extends AppCompatActivity {
         if(requestCode==REQUEST_CODE){
             if(grantResults[1]==PackageManager.PERMISSION_GRANTED){
                 activityStart();
+                SQLiteAsyncTask task = new SQLiteAsyncTask(DifferentPlaylistsActivity.this);
+                task.execute(getApplicationContext());
             }else{
                 finish();
             }
@@ -189,6 +192,7 @@ public class DifferentPlaylistsActivity extends AppCompatActivity {
     protected void onDestroy() {
         Log.d("DELETE", "onDestroy: in it");
         mDataBase.deleteEntries();
+        Log.d("DELETE", "onDestroy: after in it");
         mDataBase.closeDB();
         super.onDestroy();
 

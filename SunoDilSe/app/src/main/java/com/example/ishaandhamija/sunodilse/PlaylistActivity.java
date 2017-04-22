@@ -201,13 +201,15 @@ public class PlaylistActivity extends AppCompatActivity implements AsyncResponse
 
         if (getIntent().getIntExtra("CUSTOM",0) == 4){
             Toast.makeText(this, "YOUR SELECTED SONGS", Toast.LENGTH_SHORT).show();
-            if (CustomActivity.getCustomSongsList() == null){
+            if (((CustomActivity)getParent()).getCustomSongsList() == null){
                 Toast.makeText(this, "No Songs", Toast.LENGTH_SHORT).show();
             }
             else{
-                songList = CustomActivity.getCustomSongsList();
+//                songList = CustomActivity.getCustomSongsList();
+                songList = ((CustomActivity)getParent()).getCustomSongsList();
+                }
             }
-        }
+
 
          if (getIntent().getIntExtra("pos",0) == 2){
              String[] genresProjection = {MediaStore.Audio.Genres.NAME, MediaStore.Audio.Genres._ID};
@@ -303,7 +305,7 @@ public class PlaylistActivity extends AppCompatActivity implements AsyncResponse
 //        if (getIntent().hasExtra("uri")) {
 //                uri = (Uri)getIntent().getParcelableExtra("uri");musicCursor = musicResolver.query(uri,null,MediaStore.Audio.Genres.NAME+"='Club'", null, null);
 //
-        if (getIntent().getIntExtra("pos",0) == 0) {
+        if (getIntent().getIntExtra("allSongs",0) == 1) {
             String[] genresProjection = {MediaStore.Audio.Genres.NAME, MediaStore.Audio.Genres._ID};
 
             musicCursor = musicResolver.query(musicUri, null, null, null, null);
